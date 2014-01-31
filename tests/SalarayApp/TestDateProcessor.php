@@ -100,7 +100,17 @@ class TestDateProcessor extends PHPUnit_Framework_TestCase
                 "Jan",
                 "2012",
                 "2012-01-31"
-            )            
+            ),
+            array (
+                "1",
+                "2012",
+                "2012-01-31"
+            ),
+            array (
+                "01",
+                "2012",
+                "2012-01-31"
+            ) 
         );
     }
     

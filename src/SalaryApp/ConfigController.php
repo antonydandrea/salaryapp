@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
  *
  * Config controller that reads the config file for settings.
  */
-class SalaryApp
+class ConfigController
 {
     /**
      * Holds raw Yaml data.

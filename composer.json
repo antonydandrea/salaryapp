@@ -1,5 +1,6 @@
 {
     "require": {
-            "symfony/class-loader": "*"
+            "symfony/class-loader": "v2.4.1",
+            "symfony/yaml": "v2.4.1"
     }
 }

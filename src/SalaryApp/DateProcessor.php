@@ -56,7 +56,7 @@ class DateProcessor
      * @param string $date
      * @return string
      */
-    public function getPreviousWeekday ($date, $day = "")
+    public function getPreviousWeekday ($date)
     {
         $dateTime = new \DateTime($date);
         $isWeekday = false;
@@ -76,8 +76,54 @@ class DateProcessor
      */
     public function getLastDateOfMonth ($month, $year)
     {
+        if (is_numeric($month)) {
+            $month = $this->getMonthName($month);
+        }
         $dateTime = new \DateTime($month." ".$year);
         $lastDate = $dateTime->format("Y-m-t");
         return $lastDate;
+    }
+    
+    /** 
+     * @param integer $monthNumber
+     * @return string
+     */
+    public function getMonthName ($monthNumber) 
+    {
+        return date("F", mktime(0, 0, 0, $monthNumber, 1));
+    }
+    
+    /** 
+     * @param string $date
+     * @param string $next_weekday
+     * @return string
+     */
+    public function processExpenseDay ($date, $next_weekday)
+    {
+        if (!$this->isDateAWeekday($date)) {
+            $expenseDay = $this->getNextWeekday($date, $next_weekday);
+        } else {
+            list($year, $month, $day) = explode('-', $date);
+            $month<10?$month="0$month":$month;
+            $day<10?$day="0$day":$day;
+            $expenseDay = "$year-$month-$day";
+        }
+        return $expenseDay;
+    }
+    
+    /** 
+     * @param string $year
+     * @param string $month
+     * @return string
+     */
+    public function processSalaryDay ($year, $month) 
+    {
+        $date = $this->getLastDateOfMonth($month, $year);
+        if (!$this->isDateAWeekday($date)) {
+            $salaryDate = $this->getPreviousWeekday($date);
+        } else {
+            $salaryDate = $date;
+        }
+        return $salaryDate;
     }
 }
