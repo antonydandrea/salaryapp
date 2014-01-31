@@ -2,6 +2,7 @@
 require_once 'bootstrap.php';
 use SalaryApp\DateProcessor;
 use SalaryApp\ConfigController;
+use SalaryApp\Output;
 
 if (!isset($argv[1])) {
     die("Path of output file expected as argument.");
@@ -27,4 +28,6 @@ for ($month = 1; $month <= 12; $month++) {
     $monthName = $dateProcessor->getMonthName($month);
     $dates[$monthName] = array ($firstExpenseDate, $secondExpenseDate, $salaryDate);
 }
-print_r($dates);
+
+$output = new Output($outputFilePath);
+$output->writeOutputFile($dates);

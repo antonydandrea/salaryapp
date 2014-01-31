@@ -1,6 +1,0 @@
-{
-    "require": {
-            "symfony/class-loader": "*"
-            "symfony/yaml": "*"
-    }
-}
