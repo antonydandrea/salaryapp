@@ -30,12 +30,38 @@ class DateProcessor
      * @param string $date
      * @return string
      */
-    public function getNextWeekday ($date)
+    public function getNextWeekday ($date, $day = "")
+    {
+        $dateTime = new \DateTime($date);
+        $isWeekday = false;
+        $datePicked = false;
+        while (!$isWeekday || !$datePicked) {
+            $dateTime->modify("+1 day");
+            $isWeekday = $this->isDateAWeekday($dateTime->format("Y-m-d"));
+            if ($isWeekday && $day !== "") {
+                if ($day === $dateTime->format("l")) {
+                    $datePicked = true;
+                } else {
+                    $datePicked = false;
+                }
+            } elseif ($isWeekday){
+                $datePicked = true;
+            }
+        }
+        $newDate = $dateTime->format("Y-m-d");        
+        return $newDate;
+    }
+    
+    /** 
+     * @param string $date
+     * @return string
+     */
+    public function getPreviousWeekday ($date, $day = "")
     {
         $dateTime = new \DateTime($date);
         $isWeekday = false;
         while (!$isWeekday) {
-            $dateTime->modify("+1 day");
+            $dateTime->modify("-1 day");
             $isWeekday = $this->isDateAWeekday($dateTime->format("Y-m-d"));
         }
         $newDate = $dateTime->format("Y-m-d");        

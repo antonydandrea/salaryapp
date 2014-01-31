@@ -25,20 +25,51 @@ class TestDateProcessor extends PHPUnit_Framework_TestCase
         return array (
             array (
                 "2012-03-31",
-                "2012-04-02"
+                "",
+                "2012-04-02",
             ),
             array (
                 "2012-04-27",
+                "",
                 "2012-04-30",
             ),
             array (
                 "2012-04-11",
+                "",
                 "2012-04-12",
             ),
             array (
                 "2012-07-01",
-                "2012-07-02"
+                "",
+                "2012-07-02",
             ),            
+            array (
+                "2012-07-01",
+                "Wednesday",
+                "2012-07-04",
+            ),            
+        );
+    }
+    
+    public function getPreviousWeekdayProvider ()
+    {
+        return array (
+            array (
+                "2012-03-31",
+                "2012-03-30",
+            ),
+            array (
+                "2012-04-27",
+                "2012-04-26",
+            ),
+            array (
+                "2012-04-11",
+                "2012-04-10",
+            ),
+            array (
+                "2012-07-01",
+                "2012-06-29",
+            ),           
         );
     }
     
@@ -90,11 +121,23 @@ class TestDateProcessor extends PHPUnit_Framework_TestCase
      * @param string $date
      * @param string $expectedDate
      */
-    public function testGetNextWeekday ($date, $expectedDate)
+    public function testGetNextWeekday ($date, $day, $expectedDate)
     {
         $dateProcessor = new DateProcessor();
-        $nextWeekday = $dateProcessor->getNextWeekday($date);
-        $this->assertEquals($nextWeekday, $expectedDate);
+        $nextWeekday = $dateProcessor->getNextWeekday($date, $day);
+        $this->assertEquals($expectedDate, $nextWeekday);
+    }
+    
+    /** 
+     * @dataProvider getPreviousWeekdayProvider
+     * @param string $date
+     * @param string $expectedDate
+     */
+    public function testGetPreviousWeekday ($date, $expectedDate)
+    {
+        $dateProcessor = new DateProcessor();
+        $nextWeekday = $dateProcessor->getPreviousWeekday($date);
+        $this->assertEquals($expectedDate, $nextWeekday);
     }
     
     /** 
@@ -107,6 +150,6 @@ class TestDateProcessor extends PHPUnit_Framework_TestCase
     {
         $dateProcessor = new DateProcessor();
         $date = $dateProcessor->getLastDateOfMonth($month, $year);
-        $this->assertEquals($date, $expectedDate);
+        $this->assertEquals($expectedDate, $date);
     }
 }
